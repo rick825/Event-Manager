@@ -1,0 +1,98 @@
+
+/* dashboard */
+.main-dash{
+    width: 100%;
+    /* height: 100rem; */
+    display: flex;
+    flex-direction: row;
+    margin-top: 0;
+   overflow: hidden;
+}
+.dashboard{
+    width: 100%;
+    z-index: 10000;
+    font-family: 'Open Sans';
+    color: black;
+    display: flex;
+}
+/* side nav section */
+
+.sidenav{
+    width: 18%;
+    height: 78rem;
+    padding: 2rem;
+    background-color: rgb(58, 6, 71);
+  }
+  
+  .sidenav .head{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 2.4rem;
+      color: white;
+      text-align: center;
+      
+  }
+
+  .sidenav .head h2{
+    font-weight: 200;
+  }
+  
+  
+  .sidenav .dashmainnav{
+      margin-top: 4rem;
+  }
+  
+  .sidenav .mainnav{
+      margin-top: 4rem;
+  }
+  
+  .sidenav .footnav{
+      margin-top: 4rem;
+  }
+  
+  .sidenav .navsec{
+      margin-left: 7rem;
+  }
+  
+  .sidenav .navsec hr{
+      width: 20%;
+      margin-bottom: 3rem;
+      border-color: rgba(218, 229, 239, 0.229);
+  }
+  
+  .sidenav ul{
+      list-style: none;
+      /* margin-left: -3.8rem; */
+  }
+  
+  .sidenav ul .navitem{
+   display: flex;
+   align-items: center;
+   margin-top: 1.5rem;
+  }
+  
+  .sidenav ul .navitem img{
+      width: 28px;
+  }
+  
+  .sidenav .navlink{
+      color: white;
+      /* margin-left: 1rem; */
+      font-size: 1.5rem;
+      letter-spacing: 0.2px;
+      font-weight: 200;
+      padding: 1rem;
+      transition: 0.2s ease;
+  }
+  
+  .sidenav .navlink:hover{
+      background-color: rgb(53, 7, 64);
+      border-radius: 10px;
+  }
+  
+  /* end side nav section */
+
+  /* Dash Section */
+  /* in Dash.css */
+  /* end Dash Section */

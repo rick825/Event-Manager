@@ -1,0 +1,217 @@
+.dash{
+  position: relative;
+    width: 80%;
+    height: 84%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 6%;
+    margin-left: 2rem;
+}
+
+.dash .dashtop{
+  width: 100%;
+  height: 15%;
+}
+
+.dash .dashbot{
+    width: 100%;
+    height: 90%;
+    margin-top: 2rem;
+    padding: 1rem 0rem;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(250, 235, 215, 0.303);
+}
+
+/* dashtop */
+/* dashnav */
+.dashnav{
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 3rem 2rem;
+  background-color: rgba(250, 235, 215, 0.382);
+}
+
+.dashnav .addbutton{
+  width: 33%;
+  margin-left: 0rem;
+  display: flex;
+  align-items: center;
+  gap:3rem;
+  border-right: 1px solid black;
+}
+
+.dashnav .addbutton button{
+  padding: 1rem 4rem;
+  background-color: transparent;
+  border: 0.2px solid #740778;
+  border-radius: 10px;
+  transition: 0.2s ease;
+}
+
+.dashnav .addbutton button:hover{
+  cursor: pointer;
+  background-color: #740778;
+  color: white;
+}
+
+.dashnav .navbutton{
+  margin-left: 4rem;
+  display: flex;
+  gap:5rem;
+  align-items: center;
+}
+
+.dashnav .navbutton img{
+  width: 25px;
+}
+
+.dashnav .navbutton .nav2 img{
+ width: 35px;
+}
+
+.dashnav .navbutton .nav-item{
+  display: flex;
+align-items: center;
+gap:1rem;
+cursor: pointer;
+background-color: #d1c2d12e;
+padding: 1rem 2rem;
+border-radius: 10px;
+}
+
+.dashnav .navbutton .nav-item .nav-text{
+  text-align: center;
+}
+
+.dashnav .navbutton .nav-item h2{
+  font-size: 1.2rem;
+  font-weight: 200;
+}
+
+.dashnav .navbutton .nav-item p{
+  font-size: 1.5rem;
+}
+/* end dashnav */
+/* end dashtop */
+/* dash bot */
+.dash .dashbot .dashfilter{
+  /* border: 1px solid black; */
+  padding: 1rem;
+}
+
+.dash .dashbot .dashfilter .dashfil{
+ display: flex;
+ align-items: center;
+ gap:1rem;
+
+}
+
+.dashfil .filteroption select{
+  padding: 1rem;
+  margin-left: 2rem;
+}
+
+.dashfilter .searchbar input{
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 0.1px solid black;
+}
+
+.dash .dashbot .dashbotmain{
+  height: 50rem;
+  margin-top: 1rem;
+  /* border: 1px solid black; */
+}
+
+/* event form */
+.dash .eventform{
+  width: 60%;
+  position: absolute;
+  top:-5%;
+  left:20%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.dash .eventform{
+  background-color: white;
+  padding: 4rem;
+  border-radius: 6px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+
+
+.dash .eventform .formhead{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+
+ .eventform .formhead .Close{
+  /* margin-left: 50rem; */
+  cursor: pointer;
+}
+
+.dash .eventform label{
+  display: flex;
+  margin-top: 2rem;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap:2rem;
+}
+
+.dash .eventform input,.dash .eventform textarea{
+  width: 50rem;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  border: 1px solid black;
+}
+
+.dash .eventform button{
+  width: 95%;
+  margin-top: 2rem;
+  padding: 1rem;
+  cursor: pointer;
+  background-color: #88098c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+}
+
+/* event list */
+.dash .eventlist{
+ padding: 2rem;
+ display: flex;
+ gap:1rem;
+}
+
+.dash .eventlist li{
+  list-style: none;
+  background-color: white;
+  /* border: 1px solid black; */
+  padding: 2rem;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.dash .eventlist p{
+  margin-top: 1rem;
+  font-size: 1.1rem;
+}
+
+.dash .eventlist button{
+  padding: 0.5rem 2rem;
+  margin-top: 1rem;
+  border-radius: 10px;
+  border: 1px solid #740778;
+  cursor: pointer;
+  background-color: none;
+}
+/* end dash bot */
