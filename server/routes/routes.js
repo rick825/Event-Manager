@@ -9,6 +9,7 @@ route.get('/',(req,res)=>{
 })
 
 route.post('/api/signup',controller.signup);
+route.post('/api/login',controller.login);
 
 
 module.exports = route;

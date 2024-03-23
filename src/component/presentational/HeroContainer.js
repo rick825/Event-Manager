@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Style.css';
 
-const HeroContainer = () => {
+const HeroContainer = ({loggedin}) => {
   const navigate = useNavigate(); 
-  const [loggedin, setLoggedIn] = useState(false);
 
   const dashboard = () => {  
     console.log('dashboard');

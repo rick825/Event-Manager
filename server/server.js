@@ -17,7 +17,7 @@ const connectDB = require('./db/db');
 
 // middleware
 app.use(morgan('dev'));
-app.use(bodyparser.urlencoded({extended:true}));
+app.use(bodyparser.json());
 
 
 // Serve static files from the React app

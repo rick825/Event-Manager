@@ -1,10 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Signup.css';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-const Login = () => {
+const Login = ({ setLoggedIn }) => {
     const navigate = useNavigate(); 
     
+    const [formData, setFormData] = useState({
+      email: "", password: ""
+    });
+    
+    const handleInputChange = (e) =>{
+        const {name, value} = e.target;
+        console.log("Login Form Data:",formData);
+        setFormData({
+          ...formData,
+          [name]:value
+        })
+    }
+
+
+    const handleSubmit = async (e) =>{
+        e.preventDefault();
+        try {
+           console.log("Login Form Data:",formData);
+           const response = await axios.post('/api/login', formData,{
+            headers:{
+              "Content-Type":"application/json"
+            }
+           })
+           if(response.status === 200){
+            console.log("Login Successful");
+            setLoggedIn(true);
+            navigate('/user');
+           } else {
+            console.error('Login failed');
+          }
+        } catch (error) {
+           console.log("Error While Login:-->",error);
+        }
+    }
+
+
+
     const Signup = () =>{
         console.log("Signup");
         navigate('/registration');
@@ -53,11 +91,11 @@ const Login = () => {
        </div>
     </div>
     <div class="rightlogin logs">
-      <form action="/api/login" method="post" class="form">
+      <form onSubmit={handleSubmit} method="post" class="form">
          <label for="email">Email</label>
-         <input type="text" name="email" placeholder="Enter Your Email ID" />
+         <input type="text" name="email" placeholder="Enter Your Email ID" value={formData.email} onChange={handleInputChange} required/>
          <label for="password">Password</label>
-         <input type="password" name="password" placeholder="Enter Your Password" />
+         <input type="password" name="password" placeholder="Enter Your Password" value={formData.password} onChange={handleInputChange} required/>
          <div class="alsign">
           <p>Not a User Please <a className='regisbutton' onClick={Signup}>Sign Up</a></p>
          </div>
