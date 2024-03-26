@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Signup = () => {
@@ -107,7 +107,7 @@ const Signup = () => {
          <label for="cpassword">Confirm Password</label>
          <input type="password" name="cpassword" placeholder="Confirm Your Password" value={formData.cpassword} onChange={handleInputChange} required />
          <div class="alsign">
-          <p>Not a User Please <p className='regisbutton' onClick={handleLogin}>Login</p></p>
+          <p>Not a User Please <Link className='regisbutton'  to="/login">Login</Link></p>
          </div>
          <input type="submit" value="Submit" />
       </form>

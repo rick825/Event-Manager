@@ -1,5 +1,6 @@
-const { Userdb } = require('../models/model');
+const { Userdb, Eventdb } = require('../models/model');
 const bcrypt = require("bcrypt");
+const session = {};
 
 const hashPassword = async (password) => {
     if (!password) {
@@ -57,12 +58,15 @@ exports.login = async (req,res)=>{
 
      const  {email, password} = req.body;
     console.log(email);
-     const user = await Userdb.findOne({email:email});
+    const lowercaseUser = email.toLowerCase(); 
+    req.session.useremail = lowercaseUser;
+    const user = await Userdb.findOne({ email: lowercaseUser });
      if(user){
       const passwordMatched = await bcrypt.compare(password, user.password);
 
       if (passwordMatched) {
-         console.log(user._id, "->loggedin");;
+        req.session.userid = user._id
+         console.log(req.session.userid, "->loggedin");;
          res.status(200).json({ message: 'User Loggedin successfully' })
        } else {
       console.log("Password wrong");
@@ -70,10 +74,42 @@ exports.login = async (req,res)=>{
      }
   } else {
     console.log("no user found");
+    return res.status(401).redirect("/signup");
   }
 
   }catch(error){
     console.log("Error while login:->",error);
     req.status(500).send(`Error while Login:->`,error);
+  }
+}
+
+
+exports.postevent = async(req,res)=>{
+  try {
+       
+       const {name ,category ,location, date, startTime, endTime, description, attendees} = req.body;
+    
+       const organizerId = req.session.userid;
+     
+       console.log("Organizer id in postevent",organizerId);
+       const newEvent = new Eventdb({
+        name: name,
+        category: category,
+        location: location,
+        date: date,
+        startTime: startTime,
+        endTime: endTime,
+        description: description,
+        organizer: organizerId,
+        attendees: attendees,
+       });
+   
+       await newEvent.save();
+       console.log("Event Saved Succefully",newEvent);
+       res.status(200).send({ status: true, msg: "Event created successfully" });
+    
+  } catch (error) {
+    console.log(`Error in posting event -> ${error}`);
+    res.status(500).send({ status: false, msg:"Server Error"})
   }
 }
