@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useRefresh } from '../context/RefreshContext';
 
 const EventForm = ({ onCloseButtonClick, onSubmit }) => {
   
   const navigate = useNavigate();
-
+  const { setRefreshEventList } = useRefresh();
   const [formData, setFormData] = useState({});
  
 
@@ -27,8 +28,10 @@ const EventForm = ({ onCloseButtonClick, onSubmit }) => {
         }
       });
       if (response.status === 200) {
-        console.log("Event Sent Successfully");
         onCloseButtonClick(false);
+        setRefreshEventList(true);
+        onSubmit();
+        console.log("Event Sent Successfully");
         navigate('/dashboard');
       } else {
         console.error('Event Sending failed');
@@ -80,7 +83,7 @@ const EventForm = ({ onCloseButtonClick, onSubmit }) => {
         Attendees:
         <input type="number" name="attendees"  onChange={handleChange}  />
       </label>
-      <button type="submit">Submit</button>
+      <button type="submit" onSubmit={() => onCloseButtonClick(false)}>Submit</button>
     </form>
       
     </div>

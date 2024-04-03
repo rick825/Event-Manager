@@ -1,12 +1,17 @@
-import React from 'react'
+import React from 'react';
 import Dashfilter from './Dashfilter'
+import Dashbotmain from './Dashbotmain';
 
-const DashBot = ({EventData}) => {
-  return (
+const DashBot = () => {
+  return <>
     <div>
-        <Dashfilter EventData={EventData}/>
+      <Dashfilter />
     </div>
-  )
+     <div className="dashbotmain">
+        <Dashbotmain />
+     </div>
+     
+  </>
 }
 
 export default DashBot

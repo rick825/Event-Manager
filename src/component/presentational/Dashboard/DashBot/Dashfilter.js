@@ -1,20 +1,14 @@
-import React, { useState } from 'react';
-import Dashbotmain from './Dashbotmain';
+import React from 'react';
 import FilterOptions from './FilterOptions';
 
-const Dashfilter = ({EventData}) => {
+const Dashfilter = () => {
  
 
   return (
     <>
-      
         <div className='dashfil'>
           <FilterOptions  />
         </div>
-    
-      <div className="dashbotmain">
-        <Dashbotmain EventData={{EventData}}/>
-      </div>
     </>
   );
 };
