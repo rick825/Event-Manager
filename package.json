@@ -24,11 +24,12 @@
     "stream-http": "^3.2.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "server": "node server/server.js",
-    "build": "react-scripts build",
+    "start": "node server/server.js",
+    "server": "nodemon server/server.js",
+    "build": "cd client && npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "install": "cd server && npm i && cd ../client && npm i --production=false",
     "render-build":"npm install && npm run build"
   },
   "eslintConfig": {
