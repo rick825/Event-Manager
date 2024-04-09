@@ -34,6 +34,10 @@ const eventSchema = mongoose.Schema({
         ref:'Userdb',
         required: true
       },
+      organizerName:{
+        type: String,
+        required: true
+      },
       attendees: {
         type: Number,
         default: 0

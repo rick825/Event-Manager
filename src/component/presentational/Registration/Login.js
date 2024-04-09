@@ -1,14 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import './Signup.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useUserContext } from '../Dashboard/context/UserContext';
 
-const Login = ({ setLoggedIn }) => {
+const Login = ({setLoggedIn}) => {
+  
     const navigate = useNavigate(); 
     
     const [formData, setFormData] = useState({
       email: "", password: ""
     });
+
+    const { setUserId } = useUserContext();
+
+    useEffect(() => {
+      const storedUserId = localStorage.getItem('userId');
+      console.log("Sored user Id-->",storedUserId);
+      if (storedUserId) {
+          setUserId(storedUserId);
+          setLoggedIn(true);
+      }
+  }, [setUserId, setLoggedIn]);
     
     const handleInputChange = (e) =>{
         const {name, value} = e.target;
@@ -20,30 +33,32 @@ const Login = ({ setLoggedIn }) => {
     }
 
 
-    const handleSubmit = async (e) =>{
-        e.preventDefault();
-        try {
-           console.log("Login Form Data:",formData);
-           const response = await axios.post('/api/login', formData,{
-            headers:{
-              "Content-Type":"application/json"
-            }
-           })
-           if(response.status === 200){
-            console.log("Login Successful");
-            setLoggedIn(true);
-            navigate('/user');
-           } else {
-            console.error('Login failed');
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+          console.log("Login Form Data:", formData);
+          const response = await axios.post('/api/login', formData, {
+              headers: {
+                  "Content-Type": "application/json"
+              }
+          });
+          if (response.status === 200) {
+              localStorage.setItem('userId', response.data);
+              setUserId(response.data);
+              console.log(response.data);
+              setLoggedIn(true);
+              navigate('/user');
+          } else {
+              console.error('Login failed');
           }
-        } catch (error) {
-           console.log("Error While Login:-->",error);
-        }
-    }
+      } catch (error) {
+          console.log("Error While Login:-->", error);
+          navigate('/registration');
+      }
+  }
+  
 
-
-
-    const Signup = () =>{
+  const Signup = () =>{
         console.log("Signup");
         navigate('/registration');
     } 

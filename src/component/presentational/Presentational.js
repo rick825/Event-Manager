@@ -7,18 +7,23 @@ import './Header/Header.css';
 import './Style.css';
 import Login from './Registration/Login';
 import Signup from './Registration/Signup';
-
+import { UserCont } from './Dashboard/context/UserContext';
+import { EventProvider } from './Dashboard/context/EventMangementContext';
+import { useLoginStatus } from './Dashboard/context/LoginContext';
 const Presentational = () => {
 
 
-  const [loggedin, setLoggedIn] = useState(false);
+  const {loggedIn, setLoggedIn} = useLoginStatus();
+
 
   return (
+    <UserCont>
+    <EventProvider>
     <Router>
       <div className='Presentation'>
         <Header />
         <Routes>
-        <Route exact path="/" element={<HeroContainer loggedin={loggedin} />} />
+        <Route exact path="/" element={<HeroContainer loggedin={loggedIn} />} />
         <Route exact path="/dashboard" element={<Dashboard />} />
         <Route exact path="/registration" element={<Signup/>} />
         <Route exact path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
@@ -26,6 +31,8 @@ const Presentational = () => {
         </Routes>
       </div>
     </Router>
+    </EventProvider>  
+    </UserCont>
   );
 };
 

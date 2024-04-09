@@ -1,5 +1,8 @@
 import React from 'react';
-import { Link} from "react-router-dom"
+import axios from 'axios';
+import { useNavigate, Link} from "react-router-dom";
+import { useUserContext } from '../context/UserContext';
+import { useLoginStatus } from '../context/LoginContext';
 import dash from '../../../../img/icon/dash.png';
 import profile from '../../../../img/icon/profile.png';
 import home from '../../../../img/icon/home.png';
@@ -9,7 +12,27 @@ import settings from '../../../../img/icon/settings.png';
 import logout from '../../../../img/icon/logout.png';
 import help from '../../../../img/icon/help.png';
 
+
+
 const Sidenav = () => {
+
+   const { setUserId } = useUserContext();
+   const { setLoggedIn } = useLoginStatus();
+   const navigate = useNavigate(); 
+
+   const handleLogout = async () =>{
+      try {
+         await axios.post('/api/logout');
+         localStorage.removeItem('userId');
+         setUserId(null);
+         setLoggedIn(false);
+         navigate('/');
+         alert('Logout Successful');
+      } catch (error) {
+         console.error('Logout failed:', error);
+      }
+   }
+
   return (
     <div className="sidenav">
     <div className="head">
@@ -34,7 +57,7 @@ const Sidenav = () => {
     <div className="footnav navsec">
         <hr />
         <ul>
-           <li className="navitem"><img src={logout} alt="" /><Link to="/logout" className="navlink">Logout</Link></li> 
+           <li className="navitem" onClick={()=>handleLogout()}><img src={logout} alt="" /><Link to="/" className="navlink">Logout</Link></li> 
            <li className="navitem"><img src={help} alt="" /><Link to="/help" className="navlink">Help</Link></li>
         </ul>
     </div>

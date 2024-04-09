@@ -15,12 +15,12 @@ exports.signup = async (req,res) => {
     console.log("Signup Page");
     console.log("Request Body: ", req.body);
     const { fname, lname, mobilenumber, email, password, cpassword } = req.body;
-    
+    const lowercaseUser = email.toLowerCase(); 
     console.log("Form Data:", {
         fname,
         lname,
         mobilenumber,
-        email,
+        email:lowercaseUser,
         password,
         cpassword
       });
@@ -57,9 +57,9 @@ exports.login = async (req,res)=>{
     console.log("Login Page");
 
      const  {email, password} = req.body;
-    console.log(email);
     const lowercaseUser = email.toLowerCase(); 
     req.session.useremail = lowercaseUser;
+    console.log(lowercaseUser);
     const user = await Userdb.findOne({ email: lowercaseUser });
      if(user){
       const passwordMatched = await bcrypt.compare(password, user.password);
@@ -67,14 +67,14 @@ exports.login = async (req,res)=>{
       if (passwordMatched) {
         req.session.userid = user._id
          console.log(req.session.userid, "->loggedin");;
-         res.status(200).json({ message: 'User Loggedin successfully' })
+         res.status(200).json(user._id)
        } else {
       console.log("Password wrong");
       res.status(401).send("Kindly Enter correct password");
      }
   } else {
     console.log("no user found");
-    return res.status(401).redirect("/signup");
+    return res.status(401);
   }
 
   }catch(error){
@@ -90,6 +90,9 @@ exports.postevent = async(req,res)=>{
        const {name ,category ,location, date, startTime, endTime, description, attendees} = req.body;
     
        const organizerId = req.session.userid;
+       const organizer = await  Userdb.findById(organizerId);
+
+       console.log(organizer.fname +" "+ organizer.lname);
      
        console.log("Organizer id in postevent",organizerId);
        const newEvent = new Eventdb({
@@ -101,15 +104,118 @@ exports.postevent = async(req,res)=>{
         endTime: endTime,
         description: description,
         organizer: organizerId,
+        organizerName: organizer.fname +" "+ organizer.lname,
         attendees: attendees,
        });
+       
    
        await newEvent.save();
        console.log("Event Saved Succefully",newEvent);
+
+       organizer.myevents.push(newEvent._id);
+       await organizer.save();
+       console.log("Event added to organizer's document");
        res.status(200).send({ status: true, msg: "Event created successfully" });
     
   } catch (error) {
     console.log(`Error in posting event -> ${error}`);
     res.status(500).send({ status: false, msg:"Server Error"})
+  }
+}
+
+
+//deleteEvent
+exports.deleteEvent = async (req,res) =>{
+  try {
+    const eventId = req.params.id;
+
+    const deletedEvent = await Eventdb.findByIdAndDelete(eventId);
+
+    if (!deletedEvent) {
+      return res.status(404).json({ error: "Event not found" });
+    }
+
+    const  organizer = await Userdb.findOne({_id : deletedEvent.organizer});
+    let index= organizer.myevents.indexOf(eventId);
+    organizer.myevents.splice(index,1);
+    await organizer.save();
+
+    res.status(200).json({ message: "Event deleted successfully" });
+  } catch (error) {
+    console.log(`Error in deleting event -> ${error}`);
+    res.status(400);
+  }
+}
+
+//Join Event
+exports.joinEvent = async (req, res) => {
+  try {
+
+    const eventId = req.params.id;
+    const userId =  req.session.userid;
+    console.log(eventId);
+
+    const event = await  Eventdb.findById(eventId);
+    const user = await Userdb.findById(userId);
+    //Checking whether the user is already joined or not
+    if (event.joined.includes(user._id)) {
+        return res.status(409).json({ error: 'User already Joined' })
+    }
+   
+    event.joined.push(user._id);
+    user.eventsjoined.push(event._id);
+
+    event.save();
+    user.save();
+
+    res.status(200).json({message: `You Have Successfully Joined to ${event.name}`});
+  } catch (error) {
+    console.log({ error });
+    res.send(401).json({message:"Error While  Joining The Event!"});
+  }
+}
+
+//leave event
+exports.leaveEvent = async (req, res) => {
+  try {
+    const eventId = req.params.eventid;
+    const userId = req.params.userid;
+
+    const event = await Eventdb.findById(eventId);
+    if (!event) {
+      return res.status(404).json({ error: 'Event not found' });
+    }
+
+    const indexOfUser = event.joined.indexOf(userId);
+    if (indexOfUser === -1) {
+      return res.status(409).json({ message: 'You are not a member of this Event.' });
+    }
+
+    event.joined.splice(indexOfUser, 1);
+    const user = await Userdb.findByIdAndUpdate(userId, { $pull: { eventsjoined: eventId } }, { new: true });
+    await event.save();
+    await user.save();
+
+    res.status(200).json({ message: 'Successfully left the event' });
+  } catch (error) {
+    console.error('Error while leaving the event:', error);
+    res.status(500).json({ error: 'Error while leaving the event' });
+  }
+};
+
+
+
+//logout
+exports.logout = async(req,res)=>{
+  try {
+    req.session.destroy(err => {
+      if (err) {
+        console.error('Error destroying session:', err);
+        return res.status(500).json({ message: 'Server Error' });
+      }
+      res.status(200).json({ message: 'Logged out successfully' });
+    });
+  } catch (error) {
+    console.log({error:'Error while Logout'});
   }
 }
