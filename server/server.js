@@ -7,6 +7,8 @@ const session = require("express-session");
 const path = require('path');
 const cors = require('cors');
 const app = express();
+const MongoDBSessionStore = require('connect-mongodb-session')(session);
+
 
 const envPath = path.join(__dirname, '', '.env');
 
@@ -25,6 +27,10 @@ app.use(bodyparser.json());
 app.use('/uploads', express.static('uploads'));
 
 
+const store = new MongoDBSessionStore({
+  uri: process.env.DB_URI,
+  collection: 'sessions'
+});
 
 
 const oneDay = 24 * 60 * 60 * 1000;
@@ -36,8 +42,10 @@ app.use(session({
   cookie: {
     maxAge: oneDay,
     httpOnly: true,
-    sameSite: 'strict'
-  }
+    sameSite: 'strict',
+    secure: true
+  },
+  store: store
 }));
 
 connectDB();
