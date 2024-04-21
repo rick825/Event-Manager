@@ -8,8 +8,9 @@ const path = require('path');
 const cors = require('cors');
 const app = express();
 
+const envPath = path.join(__dirname, '', '.env');
 
-const result = dotenv.config({path : '.env' });
+const result = dotenv.config({path : envPath });
 if (result.error) {
     throw result.error;
 }
