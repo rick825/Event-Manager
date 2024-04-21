@@ -56,5 +56,5 @@ app.get('*',(req,res)=>{
 })
 
 app.listen(PORT, () => {
-  console.log(`Server listening on port http://localhost:${PORT}`);
+  console.log(`Server listening on port https://project-event-manager.vercel.app/${PORT}`);
 });
