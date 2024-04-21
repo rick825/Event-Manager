@@ -14,7 +14,7 @@ if (result.error) {
     throw result.error;
 }
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 const connectDB = require('./db/db');
 
 // middleware
