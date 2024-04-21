@@ -9,12 +9,12 @@ const cors = require('cors');
 const app = express();
 
 
-const result = dotenv.config({path : './server/.env' });
+const result = dotenv.config({path : '.env' });
 if (result.error) {
     throw result.error;
 }
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 const connectDB = require('./db/db');
 
 // middleware
@@ -49,12 +49,12 @@ app.get('/api/test', (req, res) => {
 });
 
 // Serve static files from the React app
-app.use(express.static(path.join(__dirname, '../build')));
+app.use(express.static(path.join(__dirname, '../client/build')));
 
 app.get('*',(req,res)=>{
-  res.sendFile(path.join(__dirname,'../src', '../build', 'index.html'));
+  res.sendFile(path.join(__dirname,'../client/src', '../client/build', 'index.html'));
 })
 
 app.listen(PORT, () => {
-  console.log(`Server listening on port https://project-event-manager.vercel.app/${PORT}`);
+  console.log(`Server listening on http://localhost:${PORT}`);
 });
