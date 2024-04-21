@@ -4,7 +4,7 @@ import { useNavigate, Link} from "react-router-dom";
 import { useUserContext } from '../context/UserContext';
 import { useLoginStatus } from '../context/LoginContext';
 import dash from '../../../../img/icon/dash.png';
-import profile from '../../../../img/icon/profile.png';
+import profileimg from '../../../../img/icon/profile.png';
 import home from '../../../../img/icon/home.png';
 import about from '../../../../img/icon/about.png';
 import contact from '../../../../img/icon/contact.png';
@@ -16,8 +16,10 @@ import help from '../../../../img/icon/help.png';
 
 const Sidenav = () => {
 
-   const { setUserId } = useUserContext();
+   const { setUserId,setMoreInfo, profile , setProfile } = useUserContext();
    const { setLoggedIn } = useLoginStatus();
+
+
    const navigate = useNavigate(); 
 
    const handleLogout = async () =>{
@@ -41,8 +43,8 @@ const Sidenav = () => {
     <div className="dashmainnav navsec">
        <hr />
        <ul>
-           <li className="navitem"><img src={dash} alt="" /><Link to="/dashboard" className="navlink">Dashboard</Link></li> 
-           <li className="navitem"><img src={profile} alt="" /><Link to="/profile" className="navlink">Profile</Link></li>
+           <li className="navitem" onClick={()=>{setMoreInfo(false);setProfile(false);}}><img src={dash} alt="" /><Link to="/dashboard" className="navlink">Dashboard</Link></li> 
+           <li className="navitem" onClick={()=>{setProfile(true);setMoreInfo(false);}}><img src={profileimg} alt="" /><Link  className="navlink">Profile</Link></li>
        </ul>
     </div>
     <div className="mainnav navsec">

@@ -49,6 +49,13 @@ const eventSchema = mongoose.Schema({
 })
 
 const userSchema = mongoose.Schema({
+     profile: {
+    data: Buffer, 
+    contentType: {
+      type: String,
+      default: 'image/png'
+  }
+     },
     fname: {
         type: String,
         required: [true, "First name is required"]

@@ -3,8 +3,7 @@ import './Dash.css'
 import Dashnav from './Dashnav/Dashnav';
 import DashBot from './DashBot/DashBot';
 import EventForm from './DashBot/EventForm';
-import { RefreshProvider } from './context/RefreshContext';
-import { DashNav } from './context/DashNavContext';
+
 
 
 const Dash = () => {
@@ -21,8 +20,7 @@ const Dash = () => {
   }
 
   return (
-    <RefreshProvider>
-      <DashNav>
+   
         
     <div className='dash'>
       <div className="dashtop">
@@ -33,8 +31,7 @@ const Dash = () => {
         {showEventForm && <EventForm onCloseButtonClick={()=>handleButtonClick(false)} onSubmit={handleFormSubmit}/>}
       </div>
     </div>
-    </DashNav>
-    </RefreshProvider>
+
   )
 }
 

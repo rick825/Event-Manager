@@ -1,9 +1,9 @@
 import React,{useEffect} from 'react';
-import EventList from './EventList';
-import MyEvents  from './MyEvents';
+import EventList from './Event/EventList';
+import MyEvents  from './Event/MyEvents';
 import { useDashNav } from '../context/DashNavContext';
 import { useUserContext } from '../context/UserContext';
-import EventsJoined from './EventsJoined';
+import EventsJoined from './Event/EventsJoined';
 
 const Dashbotmain = ({filteredEvents}) => {
 

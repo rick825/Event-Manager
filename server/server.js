@@ -21,7 +21,7 @@ const connectDB = require('./db/db');
 app.use(cors());
 app.use(morgan('dev'));
 app.use(bodyparser.json());
-
+app.use('/uploads', express.static('uploads'));
 
 
 

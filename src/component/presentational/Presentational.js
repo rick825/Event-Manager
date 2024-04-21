@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './Header/Header';
 import HeroContainer from './HeroContainer';
@@ -10,6 +10,8 @@ import Signup from './Registration/Signup';
 import { UserCont } from './Dashboard/context/UserContext';
 import { EventProvider } from './Dashboard/context/EventMangementContext';
 import { useLoginStatus } from './Dashboard/context/LoginContext';
+import { RefreshProvider} from './Dashboard/context/RefreshContext';
+import { DashNav } from './Dashboard/context/DashNavContext';
 const Presentational = () => {
 
 
@@ -17,6 +19,8 @@ const Presentational = () => {
 
 
   return (
+    <RefreshProvider>
+    <DashNav>
     <UserCont>
     <EventProvider>
     <Router>
@@ -30,9 +34,12 @@ const Presentational = () => {
         <Route exact path="/user" element={<HeroContainer loggedin={true} />} />
         </Routes>
       </div>
-    </Router>
+    </Router> 
     </EventProvider>  
     </UserCont>
+    </DashNav>
+    </RefreshProvider>
+
   );
 };
 

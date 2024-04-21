@@ -1,5 +1,6 @@
 const { Userdb, Eventdb } = require('../models/model');
 const bcrypt = require("bcrypt");
+
 const session = {};
 
 const hashPassword = async (password) => {
@@ -50,7 +51,7 @@ exports.signup = async (req,res) => {
   }
 };
 
-
+//login
 exports.login = async (req,res)=>{
   try{
 
@@ -84,6 +85,9 @@ exports.login = async (req,res)=>{
 }
 
 
+
+
+//postevent
 exports.postevent = async(req,res)=>{
   try {
        
